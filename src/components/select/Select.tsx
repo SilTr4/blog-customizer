@@ -93,7 +93,9 @@ export const Select = (props: SelectProps) => {
 								<Option
 									key={option.value}
 									option={option}
-									onClick={() => handleOptionClick(option)}
+									onClick={() => {
+										handleOptionClick(option);
+									}}
 								/>
 							))}
 					</ul>
