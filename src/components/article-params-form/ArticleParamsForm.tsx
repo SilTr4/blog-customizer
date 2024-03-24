@@ -29,7 +29,6 @@ export const ArticleParamsForm = ({
 	state,
 	setState,
 }: TArticleParamsFormProps) => {
-	// popap
 	const [isOpen, setIsOpen] = useState(false);
 	const formElement = useRef<HTMLElement | null>(null);
 
@@ -37,36 +36,26 @@ export const ArticleParamsForm = ({
 		setIsOpen((prevState) => !prevState);
 	};
 
-	// закрытие из вне
 	useOutsideClickClose({
 		isOpen: isOpen,
 		rootRef: formElement,
 		onChange: setIsOpen,
 	});
 
-	// radio
-
 	const [selectedRadio, setSelectedRadio] = useState<OptionType>(
 		state.fontSizeOption
 	);
-
-	// select font
 
 	const [selectedFont, setSelectedFont] = useState<OptionType>(
 		state.fontFamilyOption
 	);
 
-	// select fontColor
 	const [selectedFontColor, setSelectedFontColor] = useState<OptionType>(
 		state.fontColor
 	);
 
-	// select backgroundColors
-
 	const [selectedBackgroundColor, setSelectedBackgroundColor] =
 		useState<OptionType>(state.backgroundColor);
-
-	// select width
 
 	const [selectedWidth, setSelectedWidth] = useState<OptionType>(
 		state.contentWidth
