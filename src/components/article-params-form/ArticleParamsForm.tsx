@@ -29,11 +29,32 @@ export const ArticleParamsForm = ({
 	state,
 	setState,
 }: TArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const formElement = useRef<HTMLElement | null>(null);
 
 	const onChange = () => {
 		setIsOpen((prevState) => !prevState);
+	};
+
+	const submitForm = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setState({
+			...state,
+			fontFamilyOption: selectedFont,
+			fontColor: selectedFontColor,
+			backgroundColor: selectedBackgroundColor,
+			contentWidth: selectedWidth,
+			fontSizeOption: selectedRadio,
+		});
+	};
+
+	const clearForm = () => {
+		setState(defaultArticleState);
+		setSelectedRadio(defaultArticleState.fontSizeOption);
+		setSelectedFont(defaultArticleState.fontFamilyOption);
+		setSelectedFontColor(defaultArticleState.fontColor);
+		setSelectedBackgroundColor(defaultArticleState.backgroundColor);
+		setSelectedWidth(defaultArticleState.contentWidth);
 	};
 
 	useOutsideClickClose({
@@ -67,19 +88,7 @@ export const ArticleParamsForm = ({
 			<aside
 				className={clsx(styles.container, isOpen && styles.container_open)}
 				ref={formElement}>
-				<form
-					className={styles.form}
-					onSubmit={(e: FormEvent<HTMLFormElement>) => {
-						e.preventDefault();
-						setState({
-							...state,
-							fontFamilyOption: selectedFont,
-							fontColor: selectedFontColor,
-							backgroundColor: selectedBackgroundColor,
-							contentWidth: selectedWidth,
-							fontSizeOption: selectedRadio,
-						});
-					}}>
+				<form className={styles.form} onSubmit={submitForm}>
 					<Text as='h1' size={31} weight={800} uppercase>
 						задайте параметры
 					</Text>
@@ -116,13 +125,7 @@ export const ArticleParamsForm = ({
 						title='ширина контента'
 					/>
 					<div className={styles.bottomContainer}>
-						<Button
-							title='Сбросить'
-							type='reset'
-							onClick={() => {
-								setState(defaultArticleState);
-							}}
-						/>
+						<Button title='Сбросить' type='reset' onClick={clearForm} />
 						<Button title='Применить' type='submit' />
 					</div>
 				</form>
